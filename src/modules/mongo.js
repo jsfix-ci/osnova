@@ -16,7 +16,12 @@ function connect(osnova) {
   } else {
     connectString = config.path + config.name;
   }
-  return mongoose.connect(connectString).connection;
+  return (
+    /* TODO: JSFIX could not patch the breaking change:
+    BREAKING CHANGE: mongoose.connect() returns a promise, removed MongooseThenable #5796
+    Suggested fix: Only relevant if you depend on the return value being a reference to the mongoose object. In that case, you need to modify the usages of the return value to get the mongoose object from somewhere else.*/
+    mongoose.connect(connectString).connection
+  );
 }
 
 const mongo = opts => osnova => {
